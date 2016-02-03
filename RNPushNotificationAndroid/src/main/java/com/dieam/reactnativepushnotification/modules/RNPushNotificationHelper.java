@@ -44,6 +44,8 @@ public class RNPushNotificationHelper {
 
         Resources res = mApplication.getResources();
         String packageName = mApplication.getPackageName();
+        String title = bundle.getString("title");
+        if (title == null || title == "") return;
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
                 .setContentTitle(bundle.getString("title"))
