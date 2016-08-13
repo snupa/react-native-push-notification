@@ -62,9 +62,11 @@ public class RNPushNotification extends ReactContextBaseJavaModule {
     }
 
     private void sendEvent(String eventName, Object params) {
-        mReactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
+        if ( mReactContext.hasActiveCatalystInstance() ) {
+            mReactContext
+                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit(eventName, params);
+        }
     }
 
     public void newIntent(Intent intent) {
@@ -101,7 +103,6 @@ public class RNPushNotification extends ReactContextBaseJavaModule {
 
     private void registerNotificationsReceiveNotification() {
         IntentFilter intentFilter = new IntentFilter("RNPushNotificationReceiveNotification");
-
         mReactContext.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -157,7 +158,8 @@ public class RNPushNotification extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void scheduleLocalNotification(ReadableMap details) {
-        // TODO: Implement
+        Bundle bundle = Arguments.toBundle(details);
+        mRNPushNotificationHelper.sendNotificationScheduled(bundle);
     }
 
 }
