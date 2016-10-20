@@ -150,8 +150,8 @@ Notifications._onNotification = function(data, isFromBackground = null) {
 		if ( Platform.OS === 'ios' ) {
 			this.onNotification({
 				foreground: ! isFromBackground,
-				message: data.getMessage && data.getMessage() || data.message || "",
-				data: data.getData && data.getData() || data.data || {},
+				message: data.getMessage(),
+				data: data.getData(),
 			});
 		} else {
 			this.onNotification({
